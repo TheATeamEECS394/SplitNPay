@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <html>
 
 <head>
@@ -9,22 +8,13 @@
 <script type="text/javascript" src="Receipt.js"></script>
 <script type="text/javascript">
 document.write(m);
+$(document).ready(function(){
+	$('tr').click(function(){
+		m.items[$(this).index()].AddPayee();
+		location.reload();
+	})
+})
 </script>
 </body>
 
-=======
-<html>
-
-<head>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-</head>
-
-<body>
-<script type="text/javascript" src="Receipt.js"></script>
-<script type="text/javascript">
-document.write(m);
-</script>
-</body>
-
->>>>>>> 39af9ea2be6afcdcf7fd53178bad4414c86abc3e
 </html>
