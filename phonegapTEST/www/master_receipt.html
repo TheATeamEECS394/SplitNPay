@@ -1,17 +1,28 @@
 <html>
 
 <head>
+<style type="text/css">
+	#selected
+	{
+		background-color:yellow;
+	}
+</style>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 </head>
 
 <body>
+<p id="selected"> "This is Sparta" </p>
 <script type="text/javascript" src="Receipt.js"></script>
 <script type="text/javascript">
 document.write(m);
 $(document).ready(function(){
-	$('tr').click(function(){
-		m.items[$(this).index()].AddPayee();
-		location.reload();
+	$('tr').click(function(row_object){
+			
+		if(m.items.length >= $(this).index()){
+			m.items[$(this).index()-1].AddPayee();
+			ReloadRow(this,m.items[$(this).index()-1]);
+
+			}
 	})
 })
 </script>
