@@ -1,0 +1,123 @@
+<html>
+<head>
+	<!-- style type="text/css" media="screen">
+		@import "DataTables-1.9.1/media/css/demo_table.css";
+	</style-->
+	
+	<style type="text/css">
+	.odd
+	{
+		color:gray;
+	}
+	.row_selected
+	{
+		background-color:#00CC99;
+	}
+	
+	</style>
+	<!--script type="text/javascript" src="DataTables-1.9.1/media/js/jquery.dataTables.min.js"></script-->
+	<script src="DataTables-1.9.1/media/js/jquery.js" type="text/javascript"></script>
+	<script src="DataTables-1.9.1/media/js/jquery.dataTables.js"></script>
+</head>
+<body>
+<p> "Please select items and quantities for which to pay." </p>
+
+<!-------------------------table setup------------------------------------->
+<table id="master">
+    <thead>
+        <tr>
+            <th>Quantity</th>
+            <th>Item</th>
+            <th>Cost</th>
+            <th>Payees</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Row 1 Data 1</td>
+            <td>Row 1 Data 2</td>
+            <td>Row 1 Data 3</td>
+            <td>Row 1 Data 4</td>
+        </tr>
+        
+    </tbody>
+</table>
+
+<!-------------------------------------------------------------------- -->
+
+<script>
+		var otable; //the master datatable object.
+		
+		$(document).ready(function(){
+		
+		//----row selection behavior on click
+		$('#master').on('click', '#receipt_item', function(){
+	        $(this).toggleClass("row_selected");
+	        
+	        console.log("Item selected!" + " Class equals: " + this.getAttribute("class"));
+	        
+	        updateSelections(this);
+	    });
+		
+		otable = $('#master').dataTable({    //set up our datatable 
+			"bPaginate": false,     //display all the items on one page
+		    "bLengthChange": false,    //make the table a fixed lenghth
+		    "bFilter": false,		  //do not allow filtering of items
+		    "bSort": false,		     //do not allow sorting by category
+		    "bInfo": false,		    	  //don't display anything else
+			"bRetrieve": true, //save this table to be referenced later
+			"sAjaxSource": '/sample_reciept.txt',   //get the source as JSON
+			"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+				//nRow = XPCNativeWrapper.unwrap(nRow);	//firefox shit			
+	              nRow.setAttribute("id","receipt_item");  //add receipt_item id to all data from source
+	              return nRow;
+	            }
+		
+		});
+	});
+
+	var billTotal = 0;
+	var selected_items = [];
+	
+	//------ add or remove the item corresponding to the clicked row
+	function updateSelections(clicked_row)
+	{
+		//console.log(hasClass(clicked_row,"row_selected"));
+		if(hasClass(clicked_row,"row_selected"))
+			{selected_items.push(clicked_row);}
+		else
+			{
+				var index_of_clicked = selected_items.indexOf(clicked_row);
+				selected_items.splice(index_of_clicked,1);
+			}
+		console.log(selected_items);
+		updateBillTotal();
+	}
+	
+	function updateBillTotal()
+	{
+		var current_item = 0;
+		var subtotal = 0;
+		
+		for(var i=0; i < selected_items.length; i++)
+			{
+				current_item = otable.fnGetData( selected_items[i] );
+				subtotal += priceParse(current_item[2]);
+			}
+		
+		console.log(subtotal);
+	}
+	
+	function priceParse(currency_string)  //get the float value of price string.
+	{
+		var number = Number(currency_string.replace(/[^0-9\.]+/g,""));
+		return number;
+	}
+	
+	function hasClass(el, cssClass) //make it easier to check for an item's class 
+	{
+	    return el.className && new RegExp("(^|\\s)" + cssClass + "(\\s|$)").test(el.className);
+	}
+</script>
+</body>
+</html>
