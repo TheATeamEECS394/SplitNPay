@@ -20,7 +20,19 @@
 	<script src="DataTables-1.9.1/media/js/jquery.dataTables.js"></script>
 </head>
 <body>
-<p> "Please select items and quantities for which to pay." </p>
+
+<p> Who are you? </p>
+
+<select id="current_payee">
+	<option>Benjamin</option>
+	<option>Christina</option>
+	<option>Daniel</option>
+	<option>Eric</option>
+	<option>Rich</option>
+	<option>Talia</option>
+</select>
+
+<p> Please select items and quantities for which to pay. </p>
 
 <!-------------------------table setup------------------------------------->
 <table id="master">
@@ -47,25 +59,32 @@
 
 <script>
 		var otable; //the master datatable object.
+		var current_payee; //name of payee from html drop down menu
 		
 		$(document).ready(function(){
 		
+		//on change of user
+		$('#current_payee').change(function() {
+		       current_payee = $(this).val();
+		       console.log(current_payee);
+		   });
+	
 		//----row selection behavior on click
 		$('#master').on('click', '#receipt_item', function(){
 	        $(this).toggleClass("row_selected");
-	        
+	        ReloadRow(this);
 	        console.log("Item selected!" + " Class equals: " + this.getAttribute("class"));
 	        
 	        updateSelections(this);
 	    });
 		
 		otable = $('#master').dataTable({    //set up our datatable 
-			"bPaginate": false,     //display all the items on one page
-		    "bLengthChange": false,    //make the table a fixed lenghth
-		    "bFilter": false,		  //do not allow filtering of items
-		    "bSort": false,		     //do not allow sorting by category
-		    "bInfo": false,		    	  //don't display anything else
-			"bRetrieve": true, //save this table to be referenced later
+			"bPaginate": false,     //display all the items on one page.
+		    "bLengthChange": false,    //make the table a fixed lenghth.
+		    "bFilter": false,		  //do not allow filtering of items.
+		    "bSort": false,		     //do not allow sorting by category.
+		    "bInfo": false,		    	  //don't display anything else.
+			"bRetrieve": true, //save this table to be referenced later.
 			"sAjaxSource": '/sample_reciept.txt',   //get the source as JSON
 			"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 				//nRow = XPCNativeWrapper.unwrap(nRow);	//firefox shit			
@@ -117,6 +136,26 @@
 	function hasClass(el, cssClass) //make it easier to check for an item's class 
 	{
 	    return el.className && new RegExp("(^|\\s)" + cssClass + "(\\s|$)").test(el.className);
+	}
+	
+	function ReloadRow(row_obj){
+		var xmlhttp;
+		if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+		  xmlhttp=new XMLHttpRequest();}
+			xmlhttp.onreadystatechange=function(){
+				if (xmlhttp.readyState==4 && xmlhttp.status==200){
+					
+					if(row_obj.cells[3].innerHTML=="no one") row_obj.cells[3].innerHTML="";
+					row_obj.cells[3].innerHTML += (" " + current_payee);
+					console.log("stuff happened." + row_obj.innerHTML);
+					
+				
+
+				}
+			}
+					
+		xmlhttp.open("GET","",true);
+		xmlhttp.send();
 	}
 </script>
 </body>
