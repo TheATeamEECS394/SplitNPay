@@ -4,37 +4,37 @@
             "3",
             "orange chicken",
             "$45.75",
-            "no one"
+            ""
         ],
         [
             "2",
             "crab rangoon",
             "$10.50",
-            "no one"
+            ""
         ],
         [
             "1",
             "sm. coke",
             "$1.75",
-            "no one"
+            ""
         ],
         [
             "1",
             "lg. sprite",
             "$2.25",
-            "no one"
+            ""
         ],
         [
             "1",
             "beef lo mein",
             "$7.35",
-            "no one"
+            ""
         ],
         [
             "1",
             "extra rice",
             "$2.50",
-            "no one"
+            ""
         ]
     ]
 }

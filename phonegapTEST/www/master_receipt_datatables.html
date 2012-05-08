@@ -63,19 +63,19 @@
 		
 		$(document).ready(function(){
 		
+		current_payee = $('#current_payee').val();
+			
 		//on change of user
 		$('#current_payee').change(function() {
 		       current_payee = $(this).val();
-		       console.log(current_payee);
+		       updateSelections(this);
 		   });
 	
 		//----row selection behavior on click
 		$('#master').on('click', '#receipt_item', function(){
-	        $(this).toggleClass("row_selected");
+	        updatePayeeSelections(this);
 	        ReloadRow(this);
 	        console.log("Item selected!" + " Class equals: " + this.getAttribute("class"));
-	        
-	        updateSelections(this);
 	    });
 		
 		otable = $('#master').dataTable({    //set up our datatable 
@@ -101,16 +101,29 @@
 	//------ add or remove the item corresponding to the clicked row
 	function updateSelections(clicked_row)
 	{
-		//console.log(hasClass(clicked_row,"row_selected"));
-		if(hasClass(clicked_row,"row_selected"))
-			{selected_items.push(clicked_row);}
-		else
-			{
-				var index_of_clicked = selected_items.indexOf(clicked_row);
-				selected_items.splice(index_of_clicked,1);
+		var rows = otable.fnGetNodes();
+		var num_rows = rows.length;
+		console.log(num_rows);
+		
+		for(var i=0; i<num_rows; i++)
+		{
+			//console.log(hasClass(clicked_row,"row_selected"));
+			if(hasClass(rows[i],"row_selected")){
+				$(rows[i]).toggleClass("row_selected");
 			}
-		console.log(selected_items);
-		updateBillTotal();
+			if(hasClass(rows[i],current_payee)){
+				$(rows[i]).toggleClass("row_selected");
+			}
+		
+			console.log(selected_items);
+			//updateBillTotal();
+		}
+	}
+	
+	function updatePayeeSelections(row_object)
+	{
+		$(row_object).toggleClass(current_payee);
+		$(row_object).toggleClass("row_selected");
 	}
 	
 	function updateBillTotal()
@@ -146,15 +159,18 @@
 				if (xmlhttp.readyState==4 && xmlhttp.status==200){
 					
 					if(row_obj.cells[3].innerHTML=="no one") row_obj.cells[3].innerHTML="";
-					row_obj.cells[3].innerHTML += (" " + current_payee);
-					console.log("stuff happened." + row_obj.innerHTML);
 					
-				
-
+					var a = row_obj.className.replace(new RegExp("(^|\\s)" + "row_selected" + "(\\s|$)"),"");
+					a = a.replace(new RegExp("(^|\\s)" + "odd" + "(\\s|$)"),"");
+					a = a.replace(new RegExp("(^|\\s)" + "even" + "(\\s|$)"),"");
+					
+					if(a=="")
+					row_obj.cells[3].innerHTML = (" " + a);
+					console.log("stuff happened." + row_obj.innerHTML);
 				}
 			}
 					
-		xmlhttp.open("GET","",true);
+		xmlhttp.open("GET","/sample_reciept.txt",true);
 		xmlhttp.send();
 	}
 </script>
