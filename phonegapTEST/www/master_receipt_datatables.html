@@ -103,7 +103,6 @@
 	{
 		var rows = otable.fnGetNodes();
 		var num_rows = rows.length;
-		console.log(num_rows);
 		
 		for(var i=0; i<num_rows; i++)
 		{
@@ -158,13 +157,13 @@
 			xmlhttp.onreadystatechange=function(){
 				if (xmlhttp.readyState==4 && xmlhttp.status==200){
 					
-					if(row_obj.cells[3].innerHTML=="no one") row_obj.cells[3].innerHTML="";
+					//if(row_obj.cells[3].innerHTML=="no one") row_obj.cells[3].innerHTML="";
+					//*
+					var a = row_obj.className.replace(new RegExp("(^|\\s)" + "row_selected" + "(\\s|$)"),"")
+											 .replace(new RegExp("(^|\\s)" + "odd" + "(\\s|$)"),"")
+											 .replace(new RegExp("(^|\\s)" + "even" + "(\\s|$)"),"");
+					//*/
 					
-					var a = row_obj.className.replace(new RegExp("(^|\\s)" + "row_selected" + "(\\s|$)"),"");
-					a = a.replace(new RegExp("(^|\\s)" + "odd" + "(\\s|$)"),"");
-					a = a.replace(new RegExp("(^|\\s)" + "even" + "(\\s|$)"),"");
-					
-					if(a=="")
 					row_obj.cells[3].innerHTML = (" " + a);
 					console.log("stuff happened." + row_obj.innerHTML);
 				}
