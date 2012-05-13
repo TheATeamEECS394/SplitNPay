@@ -23,6 +23,22 @@
 
 <p> Who are you? </p>
 
+<script type="text/javascript">
+	function Make_selector(PayeesArray){
+		var selector = "<select id=\"current_payee\">";
+		for(var i = 0;i < PayeesArray.length;i++){
+			selector += "<option>" + PayeesArray[i] + "</option>";
+		}
+		selector += "</select>";
+		return selector;
+		
+	}
+	
+	var temp = new Array();
+	temp[0] = "Benjamin";temp[1] = "Christina";temp[2] = "Daniel";temp[3] = "Eric";temp[4] = "Rich";temp[5] = "Talia";
+	var myPayees = Make_selector(temp);
+document.write(myPayees);
+/*
 <select id="current_payee">
 	<option>Benjamin</option>
 	<option>Christina</option>
@@ -31,6 +47,8 @@
 	<option>Rich</option>
 	<option>Talia</option>
 </select>
+//*/
+</script>
 
 <p> Please select items and quantities for which to pay. </p>
 
@@ -60,8 +78,10 @@
 <script>
 		var otable; //the master datatable object.
 		var current_payee; //name of payee from html drop down menu
+		var current_payee_price=0;
 		
 		$(document).ready(function(){
+		
 		
 		current_payee = $('#current_payee').val();
 			
@@ -69,12 +89,15 @@
 		$('#current_payee').change(function() {
 		       current_payee = $(this).val();
 		       updateSelections(this);
+				AjaxReload("$"+GetPersonalSubtotal(current_payee),$('#subtotal')[0]);
 		   });
 	
 		//----row selection behavior on click
 		$('#master').on('click', '#receipt_item', function(){
 	        updatePayeeSelections(this);
 	        ReloadRow(this);
+			AjaxReload("$"+GetPersonalSubtotal($('#current_payee').val()),
+					   $('#subtotal')[0]);
 	        console.log("Item selected!" + " Class equals: " + this.getAttribute("class"));
 	    });
 		
@@ -95,10 +118,9 @@
 		});
 	});
 
-	var billTotal = 0;
-	var selected_items = [];
+	document.write("<p id=\"subtotal\">$"+current_payee_price+"</p>");
 	
-	//------ add or remove the item corresponding to the clicked row
+	//------ Update selected items when a new payee is selected
 	function updateSelections(clicked_row)
 	{
 		var rows = otable.fnGetNodes();
@@ -106,16 +128,12 @@
 		
 		for(var i=0; i<num_rows; i++)
 		{
-			//console.log(hasClass(clicked_row,"row_selected"));
 			if(hasClass(rows[i],"row_selected")){
 				$(rows[i]).toggleClass("row_selected");
 			}
 			if(hasClass(rows[i],current_payee)){
 				$(rows[i]).toggleClass("row_selected");
 			}
-		
-			console.log(selected_items);
-			//updateBillTotal();
 		}
 	}
 	
@@ -123,20 +141,6 @@
 	{
 		$(row_object).toggleClass(current_payee);
 		$(row_object).toggleClass("row_selected");
-	}
-	
-	function updateBillTotal()
-	{
-		var current_item = 0;
-		var subtotal = 0;
-		
-		for(var i=0; i < selected_items.length; i++)
-			{
-				current_item = otable.fnGetData( selected_items[i] );
-				subtotal += priceParse(current_item[2]);
-			}
-		
-		console.log(subtotal);
 	}
 	
 	function priceParse(currency_string)  //get the float value of price string.
@@ -165,12 +169,42 @@
 					//*/
 					
 					row_obj.cells[3].innerHTML = (" " + a);
-					console.log("stuff happened." + row_obj.innerHTML);
 				}
 			}
 					
 		xmlhttp.open("GET","/sample_reciept.txt",true);
 		xmlhttp.send();
+	}
+	
+	function AjaxReload(src,dest){
+	console.log(dest.innerHTML);
+	console.log(src);
+		var xmlhttp;
+		if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+		  xmlhttp=new XMLHttpRequest();}
+			xmlhttp.onreadystatechange=function(){
+				if (xmlhttp.readyState==4 && xmlhttp.status==200){
+					dest.innerHTML = (" " + src);
+				}
+			}
+					
+		xmlhttp.open("GET","",true);
+		xmlhttp.send();
+	}
+	
+	
+	function GetPersonalSubtotal(PayeeName){
+		var rows = otable.fnGetNodes();
+		var num_rows = rows.length;
+		var sum = 0;
+		
+		for(var i=0; i<num_rows; i++)
+		{
+			if(hasClass(rows[i],PayeeName)){
+				sum += priceParse(rows[i].cells[2].innerHTML);
+			}
+		}
+		return sum;
 	}
 </script>
 </body>
