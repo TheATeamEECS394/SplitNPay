@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet"  href="css/themes/default/jquery.mobile-1.1.0.css" />
+        <link rel="stylesheet" href="docs/_assets/css/jqm-docs.css" />
+        <link rel="stylesheet" href="custom.css" />
+        <script src="js/jquery.js"></script>
+        <script src="docs/_assets/js/jqm-docs.js"></script>
+        <script src="js/jquery.mobile-1.1.0.js"></script>
+        <link rel="stylesheet" href="custom.css" />
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+        <meta charset="utf-8">
+            
+            
+            <!-- iPad/iPhone specific css below, add after your main css >
+             <link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />		
+             <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />		
+             -->
+            <!-- If your application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
+            <script type="text/javascript" charset="utf-8" src="cordova-1.6.1.js"></script>
+            <script type="text/javascript">
+                
+                
+                // If you want to prevent dragging, uncomment this section
+                
+                //function preventBehavior(e) 
+                //	{ 
+                //    e.preventDefault(); 
+                //   };
+                //	document.addEventListener("touchmove", preventBehavior, false);
+                
+                
+                
+                
+                </script>
+            </head>
+    
+    
+    <body>
+        <div id="choisir_ville" data-role="page" data-add-back-btn="true">
+            <div data-role="header" data-id="ind_header" data-position="fixed"> 
+                <h1> Restaurant Picker</h1>
+            </div> 
+            <div data-role="content">
+                <img id="receipt_photo" src="images/receipt.jpeg"/>
+
+            <div data-role="footer" data-id="ind_navbar" data-position="fixed">		
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="singlecheckview.html">My Receipt</a></li>
+                        <li><a href="#">Master Receipt</a></li>
+                        <li><a href="#">Photo</a></li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div><!-- /footer -->
+        </div>
+    </body>
+</html>

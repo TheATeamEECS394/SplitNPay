@@ -1,0 +1,152 @@
+body {
+	font: normal 11px auto "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #4f6b72;
+	background: #E6EAE9;
+}
+
+a {
+	color: #c75f3e;
+}
+
+#mytable {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+#mytable2 {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+    margin-bottom: 20px;
+    float: right;
+}
+
+caption {
+	padding: 0 0 5px 0;
+	width: 100%;	 
+	font: italic 20px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	text-align: center;
+}
+
+th {
+	font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #4f6b72;
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	border-top: 1px solid #C1DAD7;
+    border-left: 1px solid #C1DAD7;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	text-align: center;
+	padding: 6px 6px 6px 12px;
+	background: #CAE8EA url(images/bg_header.jpg) no-repeat;
+    padding: 0px;
+}
+
+.nobg {
+	border-top: 0;
+    border-bottom: 0;
+	border-left: 0;
+	border-right: 0;
+	background: none;
+}
+
+td {
+	border-right: 1px solid #C1DAD7;
+	border-bottom: 1px solid #C1DAD7;
+	background: #fff;
+	padding: 6px 6px 6px 12px;
+	color: #4f6b72;
+}
+
+
+td.alt {
+	background: #F5FAFA;
+	color: #797268;
+}
+
+th.spec {
+	border-left: 1px solid #C1DAD7;
+	border-top: 0;
+	background: #fff url(images/bullet1.gif) no-repeat;
+	font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+}
+
+th.specalt {
+	border-left: 1px solid #C1DAD7;
+	border-top: 0;
+	background: #f5fafa url(images/bullet2.gif) no-repeat;
+	font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #797268;
+}
+
+td.value {
+    text-align: right;
+}
+
+td.tip {
+    text-align: right;
+    border-top: 0;
+    border-bottom: 0;
+	border-left: 0;
+	border-right: 1px solid #C1DAD7;
+	background: none;
+    padding-right: 2px;
+    font-weight: bolder;
+}
+
+td.total {
+    text-align: right;
+    border-top: 0;
+    border-bottom: 0;
+	border-left: 0;
+	border-right: 1px solid #C1DAD7;
+	background: none;
+    padding-right: 2px;
+    font-weight: bolder;
+    font-size: 1.5em;
+}
+
+th.quantity{
+    width: 10%;
+}
+
+th.price{
+    width: 10%;
+}
+
+
+#test{
+    float: right;
+    //width: 50px;
+    //border-style: solid;
+    display: inline;
+    text-align: right;
+}
+
+#tipform{
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+#paybutton {
+    float: right;
+}
+
+.subcol {
+    text-align: right;
+    border-top: 0;
+    border-bottom: 0;
+	border-left: 0;
+	border-right: 1px solid #C1DAD7;
+	background: none;
+    padding-right: 2px;
+    font-weight: bolder;
+}
+
+.subpricecol {
+    width: 10%;
+    text-align: right;
+}
+

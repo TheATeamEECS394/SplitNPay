@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet"  href="css/themes/default/jquery.mobile-1.1.0.css" />
+        <link rel="stylesheet" href="docs/_assets/css/jqm-docs.css" />
+        <link rel="stylesheet" href="custom.css" />
+        <script src="js/jquery.js"></script>
+        <script src="docs/_assets/js/jqm-docs.js"></script>
+        <script src="js/jquery.mobile-1.1.0.js"></script>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+        <meta charset="utf-8"/>
+        
+        
+        <!-- iPad/iPhone specific css below, add after your main css >
+         <link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />		
+         <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />		
+         -->
+        <!-- If your application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
+        <script type="text/javascript" charset="utf-8" src="cordova-1.7.0.js"></script>
+        <script type="text/javascript">
+            
+            
+            // If you want to prevent dragging, uncomment this section
+            
+            //function preventBehavior(e) 
+            //	{ 
+            //    e.preventDefault(); 
+            //   };
+            //	document.addEventListener("touchmove", preventBehavior, false);
+            
+            
+            
+            
+            </script>
+        
+        
+    </head>
+    
+    
+    <body>
+        <div id="choisir_ville" data-role="page" data-add-back-btn="true">
+            <div data-role="header" data-id="ind_header" data-position="fixed"> 
+                <h1> Restaurant Picker</h1>
+            </div> 
+            
+            <img id="receipt_photo" src="images/receipt.jpeg"/>
+            <div id="stuff" data-role="content">
+                <table id="mytable" cellspacing="0" summary="SIngle check view summary">
+                    <caption>Avalon / Eduardo G</caption>
+                    <thead>
+                        <tr>
+                            <th class="quantity" scope="col" abbr="qual">Qty</th>
+                            <th class="item" scope="col" abbr="item">Item</th>
+                            <th class="price" scope="col" abbr="price">Ur $</th>
+                            <th class="price" scope="col" abbr="price">Total Qty</th>
+                            <th class="price" scope="col" abbr="price">Total $</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="value">2</td>
+                            <td>Coke
+                                <!--<div id="test">1.00ea</div>-->
+                            </td>
+                            <td class="value">4.00</td>
+                            <td>2</td>
+                            <td>4.00</td>
+                        </tr>
+                        <tr>
+                            <td class="value">1</td>
+                            <td>Steak</td>
+                            <td class="value">15.00</td>
+                            <td>2</td>
+                            <td>30.00</td>
+                        </tr>
+                        <tr>
+                            <td class="value"></td>
+                            <td>Chicken</td>
+                            <td class="value">0.00</td>
+                            <td>2</td>
+                            <td>20.00</td>
+                        </tr>
+                        <tr>
+                            <td class="value">.25</td>
+                            <td>Wine</td>
+                            <td class="value">5.00</td>
+                            <td>1</td>
+                            <td>20.00</td>
+                        </tr>
+                        <tr>
+                            <td class="value">1</td>
+                            <td>Cheesecake</td>
+                            <td class="value">3.00</td>
+                            <td>1</td>
+                            <td>3.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <table id="mytable2" cellspacing="0" summary="Single check view tip/tax/total">
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="subcol">Subtotal</td>
+                            <td class="subpricecol">27.00</td>
+                        </tr>
+                        <tr>
+                            <td class="tip">Tip (10%)</td>
+                            <td class="value">
+                                <!--      <form id="tipform" action="demo_form.asp">
+                                 <input type="number" name="fname" size="6"/><br />
+                                 </form> -->
+                                2.70
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tip">Tax</td>
+                            <td class="value">2.70</td>
+                        </tr>
+                        <tr>
+                            <td class="tip">Service Fee (estimated)</td>
+                            <td class="value">0.20</td>
+                        </tr>
+                        <tr>
+                            <td class="total">Total</td>
+                            <td class="value">32.60</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+            
+            <div data-role="footer" data-id="ind_navbar" data-position="fixed">		
+                <div data-role="navbar">
+                    <ul>
+                        <li id="myreceipt_tab"><a href="#">My Receipt</a></li>
+                        <script type="text/javascript">
+                            $(function(){
+                              function hidePhoto(event) {
+                              //alert('hweuifh');
+                              var img = document.getElementById('receipt_photo');
+                              img.style.display = 'none';
+                              var table = document.getElementById('stuff');
+                              table.style.display = 'block';
+                              return false;
+                              }
+                              $('#myreceipt_tab').click(hidePhoto);
+                              });
+                            </script>
+                        <li><a href="#">Master Receipt</a></li>
+                        <li id="photo_tab"><a href="#" >Photo</a></li>
+                        <script type="text/javascript">
+                            $(function(){
+                              function showPhoto(event) {
+                                  //alert('hweuifh');
+                                  var img = document.getElementById('receipt_photo');
+                                  img.style.display = 'inline';
+                                  var table = document.getElementById('stuff');
+                                  table.style.display = 'none';
+                                  return false;
+                              }
+                              $('#photo_tab').click(showPhoto);
+                              });
+                            </script>
+                    </ul>
+                </div><!-- /navbar -->
+            </div><!-- /footer -->
+        </div>
+    </body>
+</html>

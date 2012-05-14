@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <script src="http://code.jquery.com/jquery.js"></script>
+        <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
+        <style>
+            body {
+                color: #222;
+                font: 14px Arial;
+            }
+            
+            body a {
+                color: #3D5C9D;
+                text-decoration: none;
+            }
+            </style>
+        <script>
+            $(document).ready(function(){
+                              $("#commentForm").validate();
+                              });
+            </script>
+        
+        <script>
+            
+            
+            var list = [];
+            
+            
+            //	function addName() {
+            //		var name = document.getElementById("Name");
+            //		var email = document.getElementById("email");
+            //		var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            //		if (name.value == "") {
+            //			alert('Please provide a valid name. Your name does not exist.');
+            //			name.focus();
+            //			return false;
+            //		}
+            //		if (!filter.test(email.value)) {
+            //			alert('Please provide a valid email address');
+            //			email.focus();
+            //			return false;
+            //		}
+            //		//alert("Name: " + document.getElementById("Name").value + "\n" + "Email: " + document.getElementById("email").value);
+            //		list[list.push(new Array(2)) - 1] = [name.value, email.value];
+            //		name.value = "";
+            //		email.value = "";
+            //		display();
+            //		return false;
+            //	}
+            //	
+            //	function display() {
+            //	document.getElementById("something").innerHTML = "";
+            //		for(var i = 0; i < list.length; i++) {
+            //			for(var j = 0; j < list[0].length; j++) {
+            //				document.getElementById("something").innerHTML += (list[i][j]);
+            //				document.getElementById("something").innerHTML += "<br>";
+            //			}
+            //		}
+            //	}
+            </script>
+        
+        
+    </head>
+    <body>
+        
+        <ul id="NameItems"></ul>
+        
+        <form class="cmxform" id="commentForm" method="get" action="">
+            <fieldset> 
+                <p>
+                <label for="name">Name</yabel>
+                    <em>*</em><input id="Name" name="name" size="25" class="required" minlength="2" />
+                    </p>
+                    <p>
+                    <label for="email">E-Mail</label> 
+                    <em>*</em><input id="email" name="email" size="25"  class="required email"/>
+                    </p>	
+                    <p>
+                    <input id="addbutton" class="submit" type="submit" value="Add" onclick="addName(); return false;"/>
+                    <script type="text/javascript">
+                        
+                        $(function(){
+                          
+                          
+                          function display(event) {
+                          document.getElementById("something").innerHTML = "";
+                          for(var i = 0; i < list.length; i++) {
+                          for(var j = 0; j < list[0].length; j++) {
+                          document.getElementById("something").innerHTML += (list[i][j]);
+                          document.getElementById("something").innerHTML += "<br>";
+                          }
+                          }
+                          }
+                          
+                          
+                          function addName(event) {
+                          var name = document.getElementById("Name");
+                          var email = document.getElementById("email");
+                          var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                          if (name.value == "") {
+                          alert('Please provide a valid name. Your name does not exist.');
+                          name.focus();
+                          return false;
+                          }
+                          if (!filter.test(email.value)) {
+                          alert('Please provide a valid email address');
+                          email.focus();
+                          return false;
+                          }
+                          //alert("Name: " + document.getElementById("Name").value + "\n" + "Email: " + document.getElementById("email").value);
+                          list[list.push(new Array(2)) - 1] = [name.value, email.value];
+                          name.value = "";
+                          email.value = "";
+                          display();
+                          return false;
+                          }
+                          
+                          
+                         
+                          
+                          
+                          $('#addbutton').click(addName);
+                          });
+                        </script>
+                    
+                    </p>
+                    </fieldset>
+        </form>
+        <INPUT id="donebutton" TYPE="submit" VALUE="Done" onclick="display(); return false;">
+            <script type="text/javascript">
+                $(function(){
+                      function display(event) {
+                          document.getElementById("something").innerHTML = "";
+                          for(var i = 0; i < list.length; i++) {
+                              for(var j = 0; j < list[0].length; j++) {
+                              document.getElementById("something").innerHTML += (list[i][j]);
+                              document.getElementById("something").innerHTML += "<br>";
+                              }
+                          }
+                      }
+                  $('#donebutton').click(display);
+                });
+                </script>
+            <p>
+            <div id = "something"> </div>
+            </p>
+            
+            </FORM>
+            </body>
+</html>

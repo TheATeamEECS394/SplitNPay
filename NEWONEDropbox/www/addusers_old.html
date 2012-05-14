@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="UTF-8">  
+  <title>Split-N-Pay</title> 
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="apple-touch-icon" href="images/launch_icon_57.png" />
+      <link rel="apple-touch-icon" sizes="72x72" href="images/launch_icon_72.png" />
+      <link rel="apple-touch-icon" sizes="114x114" href="images/launch_icon_114.png" />
+      <link rel="stylesheet" href="custom.css" />
+      <link rel="stylesheet" href="css/jquery.mobile.structure-1.0.1.css" />
+      <link rel="stylesheet" href="css/jquery.mobile-1.1.0.min.css" />
+      <script src="js/jquery-1.7.1.min.js"></script>
+      <script src="js/jquery.mobile-1.1.0.min.js"></script>
+      <script type="text/javascript" charset="utf-8" src="cordova-1.7.0rc1.js"></script>
+
+    <style>
+      body {
+        color: #222;
+        font: 14px Arial;
+      }
+      
+      body a {
+        color: #3D5C9D;
+        text-decoration: none;
+      }
+    </style>
+    <script>
+      var LIST = {};
+      var indexedDB = window.indexedDB || window.webkitIndexedDB ||
+                      window.mozIndexedDB;
+      
+      if ('webkitIndexedDB' in window) {
+        window.IDBTransaction = window.webkitIDBTransaction;
+        window.IDBKeyRange = window.webkitIDBKeyRange;
+      }
+      
+      LIST.indexedDB = {};
+      LIST.indexedDB.db = null;
+      
+      LIST.indexedDB.onerror = function(e) {
+        console.log(e);
+      };
+      
+      LIST.indexedDB.open = function() {
+        var request = indexedDB.open("Names");
+      
+        request.onsuccess = function(e) {
+          var v = "1.99";
+          LIST.indexedDB.db = e.target.result;
+          var db = LIST.indexedDB.db;
+          // We can only create Object stores in a setVersion transaction;
+          if (v!= db.version) {
+            var setVrequest = db.setVersion(v);
+      
+            // onsuccess is the only place we can create Object Stores
+            setVrequest.onerror = LIST.indexedDB.onerror;
+            setVrequest.onsuccess = function(e) {
+              if(db.objectStoreNames.contains("Name")) {
+                db.deleteObjectStore("Name");
+              }
+      
+              var store = db.createObjectStore("Name",
+                {keyPath: "timeStamp"});
+      
+              LIST.indexedDB.getAllNameItems();
+            };
+          }
+          else {
+            LIST.indexedDB.getAllNameItems();
+          }
+        };
+      
+        request.onerror = LIST.indexedDB.onerror;
+      }
+      
+      LIST.indexedDB.addName = function(NameText) {
+        var db = LIST.indexedDB.db;
+        var trans = db.transaction(["Name"], IDBTransaction.READ_WRITE);
+        var store = trans.objectStore("Name");
+      
+        var data = {
+          "text": NameText,
+          "timeStamp": new Date().getTime()
+        };
+      
+        var request = store.put(data);
+      
+        request.onsuccess = function(e) {
+          LIST.indexedDB.getAllNameItems();
+        };
+      
+        request.onerror = function(e) {
+          console.log("Error Adding: ", e);
+        };
+      };
+      
+      LIST.indexedDB.deleteName = function(id) {
+        var db = LIST.indexedDB.db;
+        var trans = db.transaction(["Name"], IDBTransaction.READ_WRITE);
+        var store = trans.objectStore("Name");
+      
+        var request = store.delete(id);
+      
+        request.onsuccess = function(e) {
+          LIST.indexedDB.getAllNameItems();
+        };
+      
+        request.onerror = function(e) {
+          console.log("Error Adding: ", e);
+        };
+      };
+      
+      LIST.indexedDB.getAllNameItems = function() {
+        var Names = document.getElementById("NameItems");
+        Names.innerHTML = "";
+      
+        var db = LIST.indexedDB.db;
+        var trans = db.transaction(["Name"], IDBTransaction.READ_WRITE);
+        var store = trans.objectStore("Name");
+      
+        // Get everything in the store;
+        var keyRange = IDBKeyRange.lowerBound(0);
+        var cursorRequest = store.openCursor(keyRange);
+      
+        cursorRequest.onsuccess = function(e) {
+          var result = e.target.result;
+          if(!!result == false)
+            return;
+      
+          renderName(result.value);
+          result.continue();
+        };
+      
+        cursorRequest.onerror = LIST.indexedDB.onerror;
+      };
+      
+      function renderName(row) {
+        var Names = document.getElementById("NameItems");
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        var t = document.createTextNode(row.text);
+      
+        a.addEventListener("click", function() {
+          LIST.indexedDB.deleteName(row.timeStamp);
+        }, false);
+      
+        a.textContent = " [Delete]";
+        li.appendChild(t);
+        li.appendChild(a);
+        Names.appendChild(li)
+      }
+      
+      function addName() {
+        var Name = document.getElementById("Name");
+        LIST.indexedDB.addName(Name.value);
+        Name.value = "";
+      }
+      
+      function init() {
+        LIST.indexedDB.open();
+      }
+      
+      window.addEventListener("DOMContentLoaded", init, false);
+    </script>
+  </head>
+  <body>
+<div id="choisir_ville" data-role="page" data-add-back-btn="true">
+    <div data-role="header"> 
+		<h1> Restaurant Picker</h1>
+	</div> 
+    <div data-role="content">
+        <ul id="NameItems"></ul>
+        <input type="text" id="Name" name="Name" placeholder="Enter Payer Email" style="width: 200px;" />
+        <input type="submit" value="Add" onclick="addName(); return false;"/>
+	       <FORM METHOD="LINK" ACTION="http://taliaretelny.com/demo.php">
+          <a href="singlecheckview.html" data-transition="slidedown" rel="external" data-role="button"><h3>Done</h3></a>
+            </FORM>
+       </div>
+     </div>
+  </body>
+</html>
