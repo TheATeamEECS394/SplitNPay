@@ -1,31 +1,40 @@
+<!DOCTYPE html>
 <html>
+    <head>
+		<script type="text/javascript" src="js/jquery.js"></script>
+    </head>
+    <body>
+	
+	<p> Who are you? </p>
 
-<head>
-<style type="text/css">
-	#selected
-	{
-		background-color:yellow;
-	}
-</style>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-</head>
-
-<body>
-<p id="selected"> "This is Sparta" </p>
-<script type="text/javascript" src="Receipt.js"></script>
-<script type="text/javascript">
-document.write(m);
-$(document).ready(function(){
-	$('tr').click(function(row_object){
-			
-		if(m.items.length >= $(this).index()){
-			m.items[$(this).index()-1].AddPayee();
-			ReloadRow(this,m.items[$(this).index()-1]);
-
+	<script type="text/javascript">
+		function Make_selector(PayeesArray){
+			var selector = "<select id=\"current_payee\">";
+			for(var i = 0;i < PayeesArray.length;i++){
+				selector += "<option>" + PayeesArray[i] + "</option>";
 			}
-	})
-})
-</script>
-</body>
+			selector += "</select>";
+			return selector;
+			
+		}
+		
+		var OurPayees = new Array();
+		OurPayees[0] = "Benjamin";OurPayees[1] = "Christina";OurPayees[2] = "Daniel";OurPayees[3] = "Eric";OurPayees[4] = "Rich";OurPayees[5] = "Talia";
+		var myPayees = Make_selector(OurPayees);
+		document.write(myPayees);
+	</script>
 
+	<p> Please select items and quantities for which to pay. </p>
+	<table border=1 id="MASTER"><tr><th>Quantity</th><th>Description</th><th>Price</th><th>Payees</th></tr></table>
+        <script type="text/javascript" src="Receipt.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+				GenerateBaseTable($('#MASTER')[0]);
+				ReloadTable();
+				$('.ReceiptItem').click(function(){
+					alert(this);
+				})
+            })
+            </script>
+    </body>
 </html>
