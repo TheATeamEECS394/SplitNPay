@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1"/>
+        <title>jQuery Mobile: Demos and Documentation</title>
+        
+       <link rel="stylesheet"  href="css/themes/default/jquery.mobile-1.1.0.css" />
+        <link rel="stylesheet" href="custom.css" />
+        <script src="js/jquery.js"></script>
+        <!--script src="docs/_assets/js/jqm-docs.js"></script>
+        <script src="js/jquery.mobile-1.1.0.js"></script-->
+        <script type="text/javascript" charset="utf-8" src="cordova-1.7.0.js"></script>
+	<script src="DataTables-1.9.1/media/js/jquery.js" type="text/javascript"></script>
+	<script src="DataTables-1.9.1/media/js/jquery.dataTables.js"></script>
+ <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a2/
+jquery.mobile-1.0a2.min.css" />
+ <!--script src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
+ <script src="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.js"></script-->
+
+    <script type="text/javascript">
+        $(function () {
+          $(".edit").click(function () {
+                           var $this = $(this);
+                           var text = $this.text();
+                           if (text == "Edit") {
+                           $this.text("Cancel");
+                           }
+                           else {
+                           $this.text("Edit");
+                           }
+                           $(".editable").toggle();
+                           });
+          
+          $("input.editable").change(function (object) {
+                                     $(this).prev().text($(this).text());
+                                     });
+          });
+        
+          $(".submit").click(function(){
+        	 	//TODO: make JSON
+        	 	//link to next page
+          });
+        
+           
+          
+        function AjaxReload(src,dest){
+        	console.log(dest.innerHTML);
+        	console.log(src);
+        		var xmlhttp;
+        		if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+        		  xmlhttp=new XMLHttpRequest();}
+        			xmlhttp.onreadystatechange=function(){
+        				if (xmlhttp.readyState==4 && xmlhttp.status==200){
+        					dest = (" " + src);
+        				}
+        			}
+        					
+        		xmlhttp.open("GET","",true);
+        		xmlhttp.send();
+        	}
+ </script>
+        
+ </head>
+
+<body>
+<div class="ui-grid-d">
+	<div class="ui-block-a" >QTY</div>
+	<div class="ui-block-b">ITEM</div>
+	<div class="ui-block-c">UR $</div>
+	<div class="ui-block-d">TOTAL QTY</div>
+	<div class="ui-block-e">TOTAL $</div>
+</div><!-- /grid-b -->
+ 
+    <div class="ui-grid-d">
+       <div class="ui-block-a">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes01" 
+				   style="display:none" 
+				   value="2" 
+				   maxlength="20" />
+			<label class="editable">2</label>
+      </div>
+      
+      <div class="ui-block-b">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="coke" 
+				   maxlength="20" />
+			<label class="editable">coke</label>
+      </div>
+      
+      <div class="ui-block-c">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="4.00" 
+				   maxlength="20" />
+			<label class="editable">4.00</label>
+      </div>
+      
+      <div class="ui-block-d">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="2" 
+				   maxlength="20" />
+			<label class="editable">2</label>
+      </div>
+      
+      <div class="ui-block-e">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="4.00" 
+				   maxlength="20" />
+			<label class="editable">4.00</label>
+      </div>
+      
+      <div class="ui-block-a">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="1" 
+				   maxlength="20" />
+			<label class="editable">1</label>
+      </div>
+      
+           <div class="ui-block-b">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="steak" 
+				   maxlength="20" />
+			<label class="editable">steak</label>
+      </div>
+      
+      <div class="ui-block-c">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="15.00" 
+				   maxlength="20" />
+			<label class="editable">15.00</label>
+      </div>
+      
+      <div class="ui-block-d">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="2" 
+				   maxlength="20" />
+			<label class="editable">2</label>
+      </div>
+      
+      <div class="ui-block-e">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="30.00" 
+				   maxlength="20" />
+			<label class="editable">30.00</label>
+      </div>
+      
+      <div class="ui-block-a">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="###))@@#@###" 
+				   maxlength="20" />
+			<label class="editable">????</label>
+      </div>
+      
+           <div class="ui-block-b">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="chicken" 
+				   maxlength="20" />
+			<label class="editable">chicken</label>
+      </div>
+      
+      <div class="ui-block-c">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="0.00000000" 
+				   maxlength="20" />
+			<label class="editable">0</label>
+      </div>
+      
+      <div class="ui-block-d">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="2" 
+				   maxlength="20" />
+			<label class="editable">2</label>
+      </div>
+      
+      <div class="ui-block-e">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="????" 
+				   maxlength="20" />
+			<label class="editable">???</label>
+      </div>
+      
+      <div class="ui-block-a">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value=".25" 
+				   maxlength="20" />
+			<label class="editable">.35</label>
+      </div>
+      
+       <div class="ui-block-b">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="wine" 
+				   maxlength="20" />
+			<label class="editable">wine</label>
+      </div>
+      
+       <div class="ui-block-c">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="5.00" 
+				   maxlength="20" />
+			<label class="editable">5.00</label>
+      </div>
+      
+       <div class="ui-block-d">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="1" 
+				   maxlength="20" />
+			<label class="editable">1</label>
+      </div>
+      
+       <div class="ui-block-e">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="20" 
+				   maxlength="20" />
+			<label class="editable">20</label>
+      </div>
+      
+       <div class="ui-block-a">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="1" 
+				   maxlength="20" />
+			<label class="editable">1</label>
+      </div>
+      
+       <div class="ui-block-b">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="Cheesecake" 
+				   maxlength="20" />
+			<label class="editable">Cheesecake</label>
+      </div>
+      
+       <div class="ui-block-c">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="3.00" 
+				   maxlength="20" />
+			<label class="editable">3.00</label>
+      </div>
+      
+       <div class="ui-block-d">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="1" 
+				   maxlength="20" />
+			<label class="editable">1</label>
+      </div>
+      
+       <div class="ui-block-e">
+		   <input  class="editable" 
+				   type="text" 
+				   name="txtMinutes" 
+				   id="txtMinutes" 
+				   style="display:none" 
+				   value="3.00" 
+				   maxlength="20" />
+			<label class="editable">3.00</label>
+      </div>
+  </div>
+  <p font-size="30px">This is where you would check the OCR's output and make any necessary edits. However, for now just submit it to edit a previously loaded receipt. </p>
+  <ul data-role="listview" data-inset="true" >
+        <li><a class="edit" id="edit" font-size="24px" href="#">Edit</a></li>
+        <li><a href="master_receipt_datatables.html" data-transition="slide"><h3>Submit</h3></a></li>
+	</ul>
+  <!--a class="edit" id="edit" font-size="24px" href="#">Edit</a>
+  <a href="master_receipt_datatables.html">Submit</a-->
+</body>
+</html>

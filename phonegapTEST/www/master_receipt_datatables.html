@@ -1,5 +1,6 @@
 <html>
 <head>
+	<meta charset="utf-8"/>
 	<style type="text/css" media="screen">
 		@import "custom.css";
 	</style>
@@ -52,7 +53,7 @@ document.write(myPayees);
 <p> Please select items and quantities for which to pay. </p>
 
 <!-------------------------table setup------------------------------------->
-<table id="master">
+<table id="master_datatable">
     <thead>
         <tr>
             <th>Quantity</th>
@@ -75,11 +76,10 @@ document.write(myPayees);
 <!-------------------------------------------------------------------- -->
 
 <script>
-		var otable; //the master datatable object.
-		var current_payee; //name of payee from html drop down menu
-		var current_payee_price=0;
+	var otable; //the master datatable object.
+	var current_payee; //name of payee from html drop down menu
 		
-		$(document).ready(function(){
+	$(document).ready(function(){
 		
 		$('#NewPayee').click(AddPayee);
 		
@@ -93,7 +93,7 @@ document.write(myPayees);
 		   });
 	
 		//----row selection behavior on click
-		$('#master').on('click', '#receipt_item', function(){
+		$('#master_datatable').on('click', '#receipt_item', function(){
 	        updatePayeeSelections(this);
 	        ReloadRow(this);
 			AjaxReload("$"+GetPersonalSubtotal($('#current_payee').val()),
@@ -101,7 +101,7 @@ document.write(myPayees);
 	        console.log("Item selected!" + " Class equals: " + this.getAttribute("class"));
 	    });
 		
-		otable = $('#master').dataTable({    //set up our datatable 
+		otable = $('#master_datatable').dataTable({    //set up our datatable 
 			"bPaginate": false,     //display all the items on one page.
 		    "bLengthChange": false,    //make the table a fixed lenghth.
 		    "bFilter": false,		  //do not allow filtering of items.
@@ -118,7 +118,7 @@ document.write(myPayees);
 		});
 	});
 
-	document.write("<p id=\"subtotal\">$"+current_payee_price+"</p>");
+	document.write("<p id=\"subtotal\">$0</p>");
 	
 	//------ Update selected items when a new payee is selected
 	function updateSelections(clicked_row)
