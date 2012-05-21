@@ -3,7 +3,9 @@
 	<meta charset="utf-8"/>
 	<style type="text/css" media="screen">
 		@import "custom.css";
-	</style>
+	p.incomplete {color:red;}
+	p.complete {color:green;}
+</style>
 	
 	<!--script type="text/javascript" src="DataTables-1.9.1/media/js/jquery.dataTables.min.js"></script-->
 	<script src="DataTables-1.9.1/media/js/jquery.js" type="text/javascript"></script>
@@ -37,7 +39,9 @@
 		if(is_unique){
 			var new_option = $("<option>");
 			new_option[0].innerText = new_payee;
+			new_option[0].selected = true;
 			$('.selector')[0].add(new_option[0],null);
+			OurPayees.push(new_payee);
 		}else{
 			alert("Invalid name");
 		}
@@ -49,6 +53,7 @@
 document.write(myPayees);
 </script>
 <button id="NewPayee">Add Payee</button>
+<p id="AllItemsClaimed" class="incomplete">Table is not complete</p>
 
 <p> Please select items and quantities for which to pay. </p>
 
@@ -72,6 +77,7 @@ document.write(myPayees);
         
     </tbody>
 </table>
+<button id="Add_Button">Add a new Item</button>
 
 <!-------------------------------------------------------------------- -->
 
@@ -80,7 +86,14 @@ document.write(myPayees);
 	var current_payee; //name of payee from html drop down menu
 		
 	$(document).ready(function(){
-		
+		$('#Add_Button').click(function(){
+			$('#master_datatable').dataTable().fnAddData([
+				prompt("Enter Quantity",""),
+				prompt("Enter Description",""),
+				prompt("Enter Price",""),
+				""]);
+			CheckCompleteness();
+		});
 		$('#NewPayee').click(AddPayee);
 		
 		current_payee = $('#current_payee').val();
@@ -98,17 +111,17 @@ document.write(myPayees);
 	        ReloadRow(this);
 			AjaxReload("$"+GetPersonalSubtotal($('#current_payee').val()),
 					   $('#subtotal')[0]);
-	        console.log("Item selected!" + " Class equals: " + this.getAttribute("class"));
+			CheckCompleteness();
 	    });
 		
 		otable = $('#master_datatable').dataTable({    //set up our datatable 
 			"bPaginate": false,     //display all the items on one page.
-		    "bLengthChange": false,    //make the table a fixed lenghth.
+		    "bLengthChange": true,    //make the table a fixed lenghth.
 		    "bFilter": false,		  //do not allow filtering of items.
 		    "bSort": false,		     //do not allow sorting by category.
 		    "bInfo": false,		    	  //don't display anything else.
 			"bRetrieve": true, //save this table to be referenced later.
-			"sAjaxSource": '/sample_reciept.txt',   //get the source as JSON
+			"sAjaxSource": '/empty_receipt.txt',   //get the source as JSON
 			"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 				//nRow = XPCNativeWrapper.unwrap(nRow);	//firefox shit			
 	              nRow.setAttribute("id","receipt_item");  //add receipt_item id to all data from source
@@ -120,6 +133,7 @@ document.write(myPayees);
 
 	document.write("<p id=\"subtotal\">$0</p>");
 	
+
 	//------ Update selected items when a new payee is selected
 	function updateSelections(clicked_row)
 	{
@@ -192,14 +206,33 @@ document.write(myPayees);
 		xmlhttp.send();
 	}
 	
-	
+	function CheckCompleteness(){
+		var rows = otable.fnGetNodes();
+		var num_rows = rows.length;
+		var iscomplete = true;
+		
+		for(var i=0; i<num_rows; i++){
+			if(GetNumberOfPayees(rows[i]) == 0){
+				iscomplete = false;
+			}
+		}
+		
+		if(iscomplete){
+			AjaxReload("Table is complete",$('#AllItemsClaimed')[0]);
+			$('#AllItemsClaimed').toggleClass("incomplete",false);
+			$('#AllItemsClaimed').toggleClass("complete",true);
+		}else{
+			AjaxReload("Table is not complete",$('#AllItemsClaimed')[0]);
+			$('#AllItemsClaimed').toggleClass("incomplete",true);
+			$('#AllItemsClaimed').toggleClass("complete",false);
+		}
+	}
 	function GetPersonalSubtotal(PayeeName){
 		var rows = otable.fnGetNodes();
 		var num_rows = rows.length;
 		var sum = 0;
 		
-		for(var i=0; i<num_rows; i++)
-		{
+		for(var i=0; i<num_rows; i++){
 		var quotient = GetNumberOfPayees(rows[i]);
 			if(hasClass(rows[i],PayeeName)){
 				sum += priceParse(rows[i].cells[2].innerHTML)/quotient;

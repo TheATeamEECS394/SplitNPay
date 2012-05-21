@@ -2,6 +2,9 @@
 <html>
     <head>
 		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/jquery-1.6.4.js"></script>
+		<!--script type="text/javascript" src="js/jquery-1.7.1.min"></script-->
+		<!--script type="text/javascript" src="js/jquery.mobile-1.1.0.min"></script-->
     </head>
     <body>
 	
@@ -28,6 +31,15 @@
 	<table border=1 id="MASTER"><tr><th>Quantity</th><th>Description</th><th>Price</th><th>Payees</th></tr></table>
         <script type="text/javascript" src="Receipt.js"></script>
         <script type="text/javascript">
+			document.addEventListener('deviceready', onDeviceReady, false);
+            function onDeviceReady(){
+				console.log("Device Ready");
+				GenerateBaseTable($('#MASTER')[0]);
+				ReloadTable();
+				$('.ReceiptItem').click(function(){
+					alert(this);
+				})
+            }
             $(document).ready(function(){
 				GenerateBaseTable($('#MASTER')[0]);
 				ReloadTable();
@@ -35,6 +47,6 @@
 					alert(this);
 				})
             })
-            </script>
+        </script>
     </body>
 </html>

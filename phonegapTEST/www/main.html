@@ -1,0 +1,65 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="UTF-8">
+            <title>Split-N-Pay</title> 
+            <meta name="viewport" content="width=device-width, initial-scale=1"> 
+                <link rel="stylesheet"  href="css/themes/default/jquery.mobile-1.1.0.css" />
+                <link rel="stylesheet" href="docs/_assets/css/jqm-docs.css" />
+                <link rel="stylesheet" href="custom.css" />
+                <script src="js/jquery.js"></script>
+                <script src="docs/_assets/js/jqm-docs.js"></script>
+                <script src="js/jquery.mobile-1.1.0.js"></script>
+                <script type="text/javascript" charset="utf-8" src="cordova-1.7.0.js"></script>
+                
+                <script type="application/javascript" src="iscroll.js"></script>
+                <script type="text/javascript">
+                    var myScroll;
+                    function loaded() {
+                        setTimeout(function () {
+                                   myScroll = new iScroll('wrapper');
+                                   }, 0);
+                    }
+                    window.addEventListener('load', loaded, false);
+                    </script>
+                
+                
+                </head> 
+    
+    <body> 
+        <div id="choose_person" data-role="page" data-add-back-btn="true">
+            
+            <div data-role="header" data-position="fixed"> 
+                <h1> Split-N-Pay</h1>
+            </div>
+            
+            <!--<div id="wrapper">
+             <div id="scroller">-->
+            <div data-role="content">
+                <div class="choice_list"> 
+                    <h1> Who are you? </h1>
+                    
+                    <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Filter people...">
+                        <li><a href="singlecheckview.html"  data-transition="slide"> Amy Andrews <span class="ui-li-count" > Head Payee </span></a> </li>
+                        <li><a href="singlecheckview.html"  data-transition="slide"> Bob Bobson </a> </li>
+                        <li><a href="singlecheckview.html"  data-transition="slide"> Chris Conners </a> </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- <div id="testdiv">I AM A TEST DIV!!!</div>-->
+            <!--  </div>
+             </div>-->
+            <div data-role="footer" data-position="fixed">		
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#">One</a></li>
+                        <li><a href="#">Two</a></li>
+                        <li><a href="#">Three</a></li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div><!-- /footer -->
+            
+        </div><!-- /page -->
+    </body>
+</html>
