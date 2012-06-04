@@ -2,17 +2,23 @@
 <html>
     <head>
 		<script type="text/javascript" src="js/jquery.js"></script>
-		<script type="text/javascript" src="js/jquery-1.6.4.js"></script>
+		<!--script type="text/javascript" src="js/jquery-1.6.4.js"></script-->
 		<!--script type="text/javascript" src="js/jquery-1.7.1.min"></script-->
 		<!--script type="text/javascript" src="js/jquery.mobile-1.1.0.min"></script-->
+				<style type="text/css" media="screen">
+						@import "custom.css";
+					p.incomplete {color:red;}
+					p.complete {color:green;}
+				</style>
     </head>
+	
     <body>
 	
 	<p> Who are you? </p>
 
 	<script type="text/javascript">
 		function Make_selector(PayeesArray){
-			var selector = "<select id=\"current_payee\">";
+			var selector = "<select class=\"selector\" id=\"current_payee\">";
 			for(var i = 0;i < PayeesArray.length;i++){
 				selector += "<option>" + PayeesArray[i] + "</option>";
 			}
@@ -21,32 +27,87 @@
 			
 		}
 		
+		function AddPayee(){
+			var new_payee = prompt("What is your name?","your name here");
+			var is_unique = true;
+			for(var i=0;i<OurPayees.length;i++){
+				if(OurPayees[i] == new_payee){
+					is_unique = false;
+				}
+			}
+			if(is_unique){
+				var new_option = $("<option>");
+				new_option[0].innerText = new_payee;
+				new_option[0].selected = true;
+				$('.selector')[0].add(new_option[0],null);
+				OurPayees.push(new_payee);
+			}else{
+				alert("Invalid name");
+			}
+			current_payee = $('#current_payee').val();
+		}
+		
+		
 		var OurPayees = new Array();
 		OurPayees[0] = "Benjamin";OurPayees[1] = "Christina";OurPayees[2] = "Daniel";OurPayees[3] = "Eric";OurPayees[4] = "Rich";OurPayees[5] = "Talia";
 		var myPayees = Make_selector(OurPayees);
 		document.write(myPayees);
 	</script>
 
+	<button class="addbutton">Add Payee</button>
 	<p> Please select items and quantities for which to pay. </p>
-	<table border=1 id="MASTER"><tr><th>Quantity</th><th>Description</th><th>Price</th><th>Payees</th></tr></table>
+	<table border=1 id="MASTER"></table>
+	<p><button id="add_row">Add Row</button><button id="del_row">Delete Row</button></p>
+	<p id="AllItemsClaimed" class="incomplete">Table is not complete</p>
+	<p id="Ptotal">0</p>
         <script type="text/javascript" src="Receipt.js"></script>
         <script type="text/javascript">
-			document.addEventListener('deviceready', onDeviceReady, false);
-            function onDeviceReady(){
-				console.log("Device Ready");
-				GenerateBaseTable($('#MASTER')[0]);
-				ReloadTable();
-				$('.ReceiptItem').click(function(){
-					alert(this);
-				})
-            }
+			//*
             $(document).ready(function(){
+			//on change of user
+				$('#current_payee').change(function() {
+					current_payee = $(this).val();
+					ReloadTable();
+				});
+				
+				$('.addbutton').click(function(){
+					AddPayee();
+				});
+				
+				current_payee = $('#current_payee').val();
 				GenerateBaseTable($('#MASTER')[0]);
 				ReloadTable();
+				/*
+				var new_row = CreateRow();
+				$('.ReceiptItem:last').after(new_row);
+				//*/
 				$('.ReceiptItem').click(function(){
-					alert(this);
+					m.items[this.rowIndex-1].TogglePayee(current_payee);
+					ReloadTable();
+				})
+				$('#del_row').click(function(){
+					DeleteRow();
+					ReloadTable();
+				})
+				$('#add_row').click(function(){
+					AddRow();
+					ReloadTable();
 				})
             })
-        </script>
+			//*/
+			
+			function GetPersonalSubtotal(PayeeName){
+				var sum = 0;
+			
+				for(var i=0; i<m.items.length; i++){
+					var quotient = m.items[i].payees.length;
+					if(m.items[i].payees.indexOf(PayeeName) != -1){
+						sum += m.items[i].price/quotient;
+					}
+				}
+				//console.log("The sum for " + PayeeName + " is " + sum + ".\n");
+				return sum;
+			}
+    </script>
     </body>
 </html>
